@@ -1,0 +1,27 @@
+{
+  "model": null,
+  "citation_format": null,
+  "custom_citation_format": null,
+  "bibliography_location": null,
+  "search_sources": {
+    "pubmed": true,
+    "biorxiv": false,
+    "medrxiv": false
+  },
+  "search_depth": "standard",
+  "reference_preferences": {
+    "prefer_recent": true,
+    "recent_years": 10,
+    "prefer_reviews": false,
+    "min_citation_count": 0,
+    "preferred_journals": [],
+    "excluded_journals": []
+  },
+  "backup": {
+    "location": "same_directory",
+    "auto_cleanup": false,
+    "cleanup_days": 30
+  },
+  "progress_display": "visual",
+  "first_run_complete": false
+}
