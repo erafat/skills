@@ -112,13 +112,13 @@ You should see:
 # Clone the repo
 git clone https://github.com/erafat/skills.git
 cd skills
-cd skills/gmail-invoice-processor
+cd gmail-invoice-processor
 
 # Or download ZIP
 wget https://github.com/erafat/skills/archive/refs/heads/main.zip
 unzip main.zip
 cd skills-main
-cd skills/gmail-invoice-processor
+cd gmail-invoice-processor
 ```
 
 #### Install Dependencies (Optional)
@@ -139,7 +139,7 @@ If you need to rebuild the `.skill` file:
 
 ```bash
 # You'll need the packaging script from Claude Skills SDK
-python /path/to/package_skill.py ./skills/gmail-invoice-processor ./dist
+python /path/to/package_skill.py ./gmail-invoice-processor ./dist
 
 # This creates: ./dist/gmail-invoice-processor.skill
 ```
