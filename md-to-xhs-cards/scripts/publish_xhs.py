@@ -143,8 +143,8 @@ def publish_local(
     parsed = parse_cookie(cookie)
     a1_value = parsed.get("a1", "")
 
-    def sign_func(uri, data=None, a1_param="", web_session=""):
-        return local_sign(uri, data, a1=a1_value or a1_param)
+    def sign_func(uri, data=None, a1="", web_session="", **kwargs):
+        return local_sign(uri, data, a1=a1_value or a1)
 
     client = XhsClient(cookie=cookie, sign=sign_func)
     result = client.create_image_note(
