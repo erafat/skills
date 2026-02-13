@@ -161,7 +161,6 @@ python3 -m pip install pillow
   - `--publish-cookie`
   - `XHS_COOKIE` environment variable
   - `.env` in current directory / skill directory
-  - existing `~/.claude/skills/xhs-note-creator/.env` (for shared setup)
 
 ## References
 

@@ -5,7 +5,7 @@ Publish Xiaohongshu image notes from explicit image paths or a renderer manifest
 Priority for cookie loading:
 1) --cookie argument
 2) XHS_COOKIE environment variable
-3) .env files in known locations (including xhs-note-creator skill paths)
+3) .env files in known locations (current directory / skill directory)
 """
 
 from __future__ import annotations
@@ -39,13 +39,10 @@ def parse_env_file(path: Path) -> Dict[str, str]:
 
 def cookie_search_paths() -> List[Path]:
     script_dir = Path(__file__).resolve().parent
-    home = Path.home()
     candidates = [
         Path.cwd() / ".env",
         script_dir.parent / ".env",
         script_dir.parent.parent / ".env",
-        home / ".claude" / "skills" / "xhs-note-creator" / ".env",
-        home / ".codex" / "skills" / "xhs-note-creator" / ".env",
     ]
     # Keep order stable and deduplicate.
     seen: set[str] = set()
