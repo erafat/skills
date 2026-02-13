@@ -28,7 +28,6 @@ skills/
 ├── cite-them-all/
 ├── gmail-invoice-processor/
 ├── md-to-xhs-cards/
-├── docs/
 └── .github/
 ```
 
@@ -43,6 +42,6 @@ Then work inside the individual skill folder you want to update.
 
 ## References
 
-- Installation docs: [`/Users/er/skills/docs/INSTALLATION.md`](./docs/INSTALLATION.md)
-- Examples: [`/Users/er/skills/docs/EXAMPLES.md`](./docs/EXAMPLES.md)
-- Contributing: [`/Users/er/skills/CONTRIBUTING.md`](./CONTRIBUTING.md)
+- Gmail installation docs: [`/Users/er/skills/gmail-invoice-processor/docs/INSTALLATION.md`](./gmail-invoice-processor/docs/INSTALLATION.md)
+- Gmail examples: [`/Users/er/skills/gmail-invoice-processor/docs/EXAMPLES.md`](./gmail-invoice-processor/docs/EXAMPLES.md)
+- Gmail contributing guide: [`/Users/er/skills/gmail-invoice-processor/CONTRIBUTING.md`](./gmail-invoice-processor/CONTRIBUTING.md)

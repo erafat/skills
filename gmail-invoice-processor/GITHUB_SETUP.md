@@ -9,26 +9,25 @@ skills/                                    # Your repository root
 ├── .github/
 │   └── workflows/
 │       └── release.yml                    # Automated releases
-├── docs/
-│   ├── INSTALLATION.md                    # Installation guide
-│   ├── EXAMPLES.md                        # Usage examples
-│   └── (add more as needed)
 ├── gmail-invoice-processor/               # Skill source code
 │   ├── SKILL.md                          # Core skill instructions
+│   ├── CHANGELOG.md                      # Gmail skill changelog
+│   ├── CONTRIBUTING.md                   # Gmail skill contribution guide
+│   ├── QUICKSTART.md                     # Gmail skill quick start
+│   ├── RELEASE_NOTES_v2.0.md             # Gmail skill release notes
 │   ├── scripts/
 │   │   ├── extract_invoice_data.py       # PDF extraction
 │   │   └── gmail_attachment_helper.py    # Multi-layer utilities
+│   ├── docs/
+│   │   ├── INSTALLATION.md               # Installation guide
+│   │   └── EXAMPLES.md                   # Usage examples
 │   └── references/
 │       └── workflow.md                   # Technical documentation
 ├── cite-them-all/                         # Citation assistant skill source
 ├── md-to-xhs-cards/                       # Markdown-to-XHS cards skill source
 ├── .gitignore                            # Git ignore rules
-├── CHANGELOG.md                          # Version history
-├── CONTRIBUTING.md                       # Contribution guidelines
 ├── LICENSE                               # MIT License
-├── QUICKSTART.md                         # 5-minute setup guide
 ├── README.md                             # Main documentation
-├── RELEASE_NOTES_v2.0.md                # Release notes
 └── gmail-invoice-processor.skill         # Packaged skill file
 ```
 
@@ -254,7 +253,7 @@ Add to top of README:
 [![GitHub Release](https://img.shields.io/github/v/release/erafat/skills)](https://github.com/erafat/skills/releases)
 [![Downloads](https://img.shields.io/github/downloads/erafat/skills/total)](https://github.com/erafat/skills/releases)
 [![Stars](https://img.shields.io/github/stars/erafat/skills)](https://github.com/erafat/skills/stargazers)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](../LICENSE)
 ```
 
 ### Announcement Templates
