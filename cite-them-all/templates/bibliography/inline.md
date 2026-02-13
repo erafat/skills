@@ -45,8 +45,6 @@ or
 
 ## Formatting Guidelines
 
-### Markdown Files (.md)
-
 ```markdown
 ---
 
@@ -63,15 +61,6 @@ Notes for Markdown:
 - Separate entries with blank lines
 - Use horizontal rule (`---`) to separate from main text
 - DOIs as clickable links where possible
-
-### Word Documents (.docx)
-
-When inserting into Word:
-1. Add page break before references (optional)
-2. Insert heading "References" with Heading 1 or 2 style
-3. Apply hanging indent (0.5 inch) to each entry
-4. Use italic formatting for journal names
-5. Double-space between entries (APA) or single-space (Vancouver)
 
 ## Numbered vs Author-Date
 

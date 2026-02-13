@@ -1,125 +1,33 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Cite-Them-All Configuration",
-  "description": "Global preferences for the cite-them-all academic reference agent",
+  "description": "Default preferences for the cite-them-all academic reference agent",
   "type": "object",
   "properties": {
-    "model": {
-      "type": "string",
-      "enum": ["opus", "sonnet", "codex", "gpt-5.2"],
-      "description": "Preferred AI model for processing"
-    },
     "citation_format": {
       "type": "string",
-      "enum": ["apa", "vancouver", "chicago", "harvard", "custom"],
+      "enum": ["apa", "vancouver", "chicago", "harvard"],
       "description": "Citation style format"
-    },
-    "custom_citation_format": {
-      "type": "object",
-      "description": "Custom citation format specification (used when citation_format is 'custom')",
-      "properties": {
-        "inline_template": {
-          "type": "string",
-          "description": "Template for inline citations, e.g., '[{number}]' or '({author}, {year})'"
-        },
-        "reference_template": {
-          "type": "string",
-          "description": "Template for reference list entries"
-        }
-      }
     },
     "bibliography_location": {
       "type": "string",
       "enum": ["end_of_file", "separate_bib"],
       "description": "Where to place the bibliography"
     },
-    "search_sources": {
-      "type": "object",
-      "description": "Which databases to search",
-      "properties": {
-        "pubmed": {
-          "type": "boolean",
-          "description": "Search PubMed (peer-reviewed)"
-        },
-        "biorxiv": {
-          "type": "boolean",
-          "description": "Search bioRxiv (preprints)"
-        },
-        "medrxiv": {
-          "type": "boolean",
-          "description": "Search medRxiv (preprints)"
-        }
-      }
-    },
-    "search_depth": {
-      "type": "string",
-      "enum": ["standard", "in-depth"],
-      "description": "Number of candidates per claim (standard=5, in-depth=10)"
-    },
-    "reference_preferences": {
-      "type": "object",
-      "description": "Preferences for reference selection",
-      "properties": {
-        "prefer_recent": {
-          "type": "boolean",
-          "description": "Prefer more recent publications"
-        },
-        "recent_years": {
-          "type": "integer",
-          "minimum": 1,
-          "maximum": 50,
-          "description": "How many years back to prioritize"
-        },
-        "prefer_reviews": {
-          "type": "boolean",
-          "description": "Prefer review articles over primary research"
-        },
-        "min_citation_count": {
-          "type": "integer",
-          "minimum": 0,
-          "description": "Minimum citation count for suggested references"
-        },
-        "preferred_journals": {
-          "type": "array",
-          "items": { "type": "string" },
-          "description": "List of preferred journals"
-        },
-        "excluded_journals": {
-          "type": "array",
-          "items": { "type": "string" },
-          "description": "List of journals to exclude"
-        }
-      }
-    },
-    "backup": {
-      "type": "object",
-      "description": "Backup settings",
-      "properties": {
-        "location": {
-          "type": "string",
-          "enum": ["same_directory", "config_directory"],
-          "description": "Where to store backups"
-        },
-        "auto_cleanup": {
-          "type": "boolean",
-          "description": "Automatically clean up old backups"
-        },
-        "cleanup_days": {
-          "type": "integer",
-          "minimum": 1,
-          "description": "Days to keep backups (if auto_cleanup is true)"
-        }
-      }
-    },
-    "progress_display": {
-      "type": "string",
-      "enum": ["minimal", "detailed", "visual"],
-      "description": "How verbose progress updates should be"
-    },
-    "first_run_complete": {
+    "include_preprints": {
       "type": "boolean",
-      "description": "Whether initial setup has been completed"
+      "description": "Whether to search bioRxiv/medRxiv preprint servers (note: no keyword search available, browse by date+category only)"
+    },
+    "prefer_recent": {
+      "type": "boolean",
+      "description": "Prefer more recent publications when ranking candidates"
+    },
+    "recent_years": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 50,
+      "description": "How many years back to prioritize"
     }
   },
-  "required": ["citation_format", "bibliography_location", "search_sources"]
+  "required": ["citation_format", "bibliography_location"]
 }

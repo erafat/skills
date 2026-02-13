@@ -2,205 +2,112 @@
 
 ## Overview
 
-This workflow presents reference suggestions to the user for approval, processes feedback, and iterates until all references are confirmed.
+Present reference suggestions for user approval. Process feedback and iterate until all references are confirmed.
 
-## Step 1: Initialize Review Session
+## Step 1: Introduction
 
 ```
-1. Load all claims and their candidates from session state
-
-2. Calculate review statistics:
-   - Total claims to review
-   - Claims with strong candidates
-   - Claims needing attention
-   - Controversial claims
-
-3. Display introduction:
-
 "## Interactive Reference Review
 
-I've found reference candidates for {total} claims in your manuscript.
+I've found reference candidates for {total} claims.
 
-For each claim, I'll show you:
+For each claim, I'll show:
 - The claim text and location
 - Suggested references with relevance explanations
-- Quality metrics (citations, journal, type)
+- Article type and availability info
 
-You can:
-- Approve a suggested reference
-- Request alternatives
-- Skip (if no citation needed)
-- Provide feedback for better searches
+You can: Approve, Reject, Request alternatives, or Skip each claim.
 
-Let's begin!
-
-[██████████████████████████░░░░] 80% - Starting interactive review
-"
+Let's begin."
 ```
 
-## Step 2: Present Claims for Review
+## Step 2: Present Each Claim
+
+Present claims in priority order (HIGH first).
+
+### Claim Display Format
 
 ```
-For each claim (in order of priority):
-
-1. Display claim card:
-
-"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 ### Claim {current} of {total}
 
-**Location:** {section}, {line/paragraph reference}
+**Location:** {section}, paragraph {n}
 
-**Claim:**
 > {claim_text}
 
-**Type:** {claim_type} | **Priority:** {priority}
+Type: {claim_type} | Priority: {priority}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+#### Suggested References
 
-2. Display reference candidates:
+1. [RECOMMENDED] {authors} ({year})
+   "{title}"
+   {journal}
+   - Type: {publication_type}
+   - Access: {open_access_status}
+   - Relevance: {explanation of why this paper supports the claim}
+   - PMID: {pmid} | DOI: {doi}
 
-"#### Suggested References
+2. {authors} ({year})
+   "{title}"
+   {journal}
+   - Type: {publication_type}
+   - Relevance: {explanation}
+   - PMID: {pmid}
 
-**#1** ⭐ RECOMMENDED
-
-📄 **{title}**
-👤 {authors} | 📅 {year} | 📰 *{journal}*
-
-| Metric | Value |
-|--------|-------|
-| 📊 Citations | {count} ({percentile}) |
-| 📚 Type | {review/primary} |
-| 🏆 Journal | {reputation} |
-| 🔓 Access | {open/closed} |
-
-**Why recommended:**
-> {relevance_explanation}
-
-**Abstract excerpt:**
-> {first_2_sentences_of_abstract}...
-
-🔗 PMID: {pmid} | DOI: {doi}
-
----
-
-**#2**
-
-📄 **{title}**
-...
-
----
-
-**#3**
-...
-"
+3. {authors} ({year})
+   ...
 ```
 
-## Step 3: Collect User Decision
+### User Decision
 
 ```
-Display options:
+Your decision:
+1. Approve #1 (recommended)
+2. Approve #2
+3. Approve #3
+4. Request alternatives
+5. Skip (no citation needed)
+6. Provide feedback for better search
 
-"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-**Your decision:**
-
-1. ✅ Approve #1 (recommended)
-2. ✅ Approve #2
-3. ✅ Approve #3
-4. 🔄 Request alternatives
-5. ⏭️ Skip (no citation needed)
-6. 📝 Provide feedback for search
-
-Commands: 'next', 'back', 'summary', 'save', 'done'
-
-Enter choice:"
-
-Process response:
-- Numbers 1-N: Approve that reference
-- 'alt' or 4: Request alternatives
-- 'skip' or 5: Mark as skipped
-- 'feedback' or 6: Prompt for feedback
-- 'next': Go to next claim
-- 'back': Return to previous claim
-- 'summary': Show current summary
-- 'save': Save and pause session
-- 'done': Finalize if all reviewed
+Enter choice:
 ```
 
-## Step 4: Handle Approve Action
+## Step 3: Handle Approve
 
 ```
-When user approves a reference:
+When user approves:
 
-1. Update claim status:
-{
-  "claim_id": 7,
-  "status": "approved",
-  "selected_reference": {
-    "pmid": "12345678",
-    "citation_key": "smith2023metformin",
-    "full_reference": "..."
-  },
-  "approved_at": timestamp
-}
-
-2. Display confirmation:
-"✅ Reference approved for claim #{n}
-
-Selected: Smith JA et al. (2023) Diabetes
-
-[████████████████████████████░░] 87% - {approved}/{total} claims resolved"
-
-3. Auto-advance to next claim
+1. Record the selected reference for this claim
+2. Confirm: "Reference approved: {short_citation}"
+3. Advance to next claim
 ```
 
-## Step 5: Handle Request Alternatives
+## Step 4: Handle Request Alternatives
 
 ```
-When user requests alternatives:
-
-1. Prompt for feedback:
 "What's wrong with the current suggestions?
 
 a) Not relevant enough
 b) Too old - need more recent
 c) Wrong article type (need review/primary)
 d) Looking for specific aspect: [describe]
-e) Just show me more options
+e) Just show more options
 
 Enter choice:"
 
-2. Based on feedback, modify search:
-   - a) Refine keywords, stricter relevance
-   - b) Add date filter for last 3-5 years
-   - c) Filter by article type
-   - d) Add user's specific terms
-   - e) Show next 5 candidates
+Based on feedback:
+- a) Refine keywords, search again
+- b) Add date_from filter for last 3-5 years
+- c) Add publication type filter
+- d) Incorporate user's terms into query
+- e) Show next batch of candidates
 
-3. Execute new search if needed
-
-4. Display new candidates:
-"### Alternative References
-
-Based on your feedback, here are additional options:
-
-**#4** 🆕 NEW
-...
-
-**#5** 🆕 NEW
-..."
-
-5. Return to decision collection
+Run new search and present results.
 ```
 
-## Step 6: Handle Feedback
+## Step 5: Handle Feedback
 
 ```
-When user provides feedback:
-
-1. Display prompt:
-"Please describe what you're looking for:
+"Describe what you're looking for:
 
 Examples:
 - 'Need a paper specifically about human trials'
@@ -210,214 +117,92 @@ Examples:
 
 Your feedback:"
 
-2. Parse and apply feedback:
-   - Extract keywords
-   - Identify filters (journal, author, type)
-   - Build refined query
-
-3. Run new search with feedback incorporated
-
-4. Store feedback in session for learning:
-{
-  "user_feedback_history": [
-    {
-      "claim_id": 7,
-      "original_query": "...",
-      "feedback": "Need human trials",
-      "refined_query": "... AND humans[MeSH]",
-      "timestamp": "..."
-    }
-  ]
-}
-
-5. Present refined results
+Parse feedback, build refined query, run search, present results.
 ```
 
-## Step 7: Handle Controversial Claims
+## Step 6: Handle Controversial Claims
 
 ```
-For claims flagged as controversial:
+When a claim has conflicting evidence:
 
-Display:
-"### ⚠️ Controversial Claim
+"### Controversial Claim
 
-This claim appears to have conflicting evidence in the literature.
-
-**Claim:**
 > {claim_text}
 
-**Papers SUPPORTING this claim:**
-#1: {title} - {brief_finding}
-#2: {title} - {brief_finding}
+Papers SUPPORTING this claim:
+1. {title} - {brief finding}
 
-**Papers with DIFFERENT conclusions:**
-#3: {title} - {brief_finding}
+Papers with DIFFERENT conclusions:
+2. {title} - {brief finding}
 
-**Options:**
+Options:
 a) Cite only supporting evidence
 b) Cite both perspectives (recommended for balanced discussion)
 c) Revise the claim to be more nuanced
-d) Review papers in detail before deciding
+d) Review paper abstracts before deciding
 
 Your choice:"
-
-Handle based on response:
-- a) Approve supporting reference only
-- b) Approve multiple references, mark for special formatting
-- c) Note for user to revise claim text
-- d) Show full abstracts for review
 ```
 
-## Step 8: Progress Tracking
+## Step 7: Progress Tracking
 
 ```
-After each decision, update and display progress:
+After each decision, show:
 
-"[████████████████████████████░░] {percentage}%
+"{approved}/{total} claims resolved | {pending} remaining"
+```
+
+## Step 8: Review Summary
+
+```
+When all claims reviewed or user requests summary:
+
+"## Review Summary
 
 | Status | Count |
 |--------|-------|
-| ✅ Approved | {n} |
-| ⏭️ Skipped | {n} |
-| ⏳ Pending | {n} |
-| 🔄 Needs alternatives | {n} |
+| Approved | {n} |
+| Using existing ref | {n} |
+| Skipped | {n} |
+| Needs alternatives | {n} |
+| Pending | {n} |
 
-{n} claims remaining to review."
+### Approved References
 
-Save session state after each decision for resume capability.
-```
+| # | Claim (truncated) | Reference | Type |
+|---|-------------------|-----------|------|
+| 1 | '50% of patients...' | Smith 2023 | Primary |
+| 2 | 'Drug X inhibits...' | Jones 2024 | Review |
 
-## Step 9: Review Summary
-
-```
-When user requests summary or all claims reviewed:
-
-Display:
-"## Review Summary
-
-### Approved References ({count})
-
-| # | Claim (truncated) | Reference |
-|---|-------------------|-----------|
-| 1 | "50% of patients..." | Smith 2023 |
-| 2 | "Drug X inhibits..." | Jones 2024 |
-...
-
-### Skipped ({count})
-- Claim #5: "DNA is genetic material" (common knowledge)
-- Claim #12: User to add manually
-
-### Needs Attention ({count})
-- Claim #8: No suitable reference found
-- Claim #15: Controversial - needs review
-
-### Pending ({count})
-- {list remaining claims}
-
----
-
-**Options:**
+Options:
 a) Continue reviewing pending claims
 b) Finalize and apply approved references
-c) Save and continue later
-
-Your choice:"
+c) Go back and change a decision"
 ```
 
-## Step 10: Finalization
+## Step 9: Finalization
 
 ```
 When user chooses to finalize:
 
-1. Verify all high-priority claims have references:
-   - If not, warn user:
-     "Warning: {n} high-priority claims still pending.
-      Continue anyway? (yes/no)"
+1. Check for unresolved high-priority claims:
+   If any remain: "Warning: {n} high-priority claims still pending. Continue anyway?"
 
-2. Confirm final selections:
-"### Final Confirmation
+2. Confirm:
+   "You are about to add {count} references.
+    Citation format: {format}
+    Bibliography location: {location}
 
-You are about to add {count} references to your manuscript.
+    Proceed? (yes/no)"
 
-Citation format: {format}
-Bibliography location: {location}
-
-References to be added:
-1. Smith JA et al. (2023) Diabetes...
-2. Jones BC et al. (2024) Nature...
-...
-
-Proceed? (yes/no)"
-
-3. If yes, proceed to Workflow 06
-4. If no, return to review
-```
-
-## Completion
-
-```
-1. Update session state:
-   - current_phase: "apply_changes"
-   - review_completed_at: timestamp
-   - approved_references: [final list]
-
-2. Save session
-
-3. Display:
-"[██████████████████████████████] 95% - Review complete. Ready to apply changes."
-
-4. Proceed to Workflow 06: Apply Changes
-```
-
-## Session Save (Pause)
-
-```
-When user chooses to save and continue later:
-
-1. Ensure all state is persisted:
-   - Current claim index
-   - All decisions made
-   - User feedback history
-
-2. Display:
-"Session saved!
-
-To resume, run: /cite-them-all
-
-Your progress:
-- Claims reviewed: {reviewed}/{total}
-- References approved: {approved}
-- Session ID: {session_id}
-
-See you next time!"
-
-3. Exit workflow gracefully
+3. If yes: proceed to Workflow 06
+4. If no: return to review
 ```
 
 ## Error Handling
 
-### Session Corruption
-```
-Display: "Warning: Session data appears corrupted."
-Action:
-- Attempt recovery from last known good state
-- If unrecoverable, offer to restart review phase
-- Preserve approved references if possible
-```
-
 ### Reference No Longer Available
 ```
-Display: "Reference #{pmid} no longer available in PubMed."
-Action:
-- Mark reference as unavailable
-- Suggest alternatives
-- Allow user to proceed with cached data or find replacement
-```
-
-### User Idle Timeout
-```
-After extended inactivity:
-- Auto-save session state
-- Display: "Session auto-saved due to inactivity."
-- User can resume anytime with /cite-them-all
+"Reference PMID:{pmid} could not be re-fetched."
+Suggest alternatives.
 ```

@@ -8,15 +8,8 @@ This template defines the format for presenting reference suggestions to the use
 # Citation Review Report
 
 **Manuscript:** {manuscript_name}
-**Generated:** {timestamp}
 **Claims identified:** {total_claims}
 **References suggested:** {total_suggestions}
-
----
-
-## Progress
-
-[████████████████████░░░░░░░░░░] {percentage}% - {current_status}
 
 ---
 ```
@@ -60,17 +53,15 @@ This template defines the format for presenting reference suggestions to the use
 ## Reference Suggestion Format
 
 ```markdown
-**#{suggestion_number}** {recommendation_badge}
+**#{suggestion_number}** {recommendation_label}
 
 **Title:** {title}
 **Authors:** {authors}
 **Journal:** {journal} ({year})
 
-| Metric | Value |
+| Detail | Value |
 |--------|-------|
-| Citations | {citation_count} |
 | Type | {article_type} |
-| Journal Reputation | {reputation_indicator} |
 | Open Access | {oa_status} |
 
 **Why recommended:**
@@ -84,21 +75,22 @@ This template defines the format for presenting reference suggestions to the use
 ---
 ```
 
-## Recommendation Badges
+## Recommendation Labels
 
-```markdown
-⭐ **RECOMMENDED** - Best match for this claim
-📊 **HIGH CITATIONS** - Highly cited in field
-📚 **REVIEW ARTICLE** - Comprehensive overview
-🔬 **PRIMARY RESEARCH** - Original study
-🆕 **RECENT** - Published within last 2 years
-🔓 **OPEN ACCESS** - Freely available
+Use plain text labels (no emoji):
+
+```
+[RECOMMENDED] - Best match for this claim
+[REVIEW ARTICLE] - Comprehensive overview
+[PRIMARY RESEARCH] - Original study
+[RECENT] - Published within last 2 years
+[OPEN ACCESS] - Freely available
 ```
 
 ## Controversial Claim Alert
 
 ```markdown
-### ⚠️ Controversial Claim Detected
+### Controversial Claim Detected
 
 **Claim text:**
 > {claim_text}
@@ -125,7 +117,7 @@ This template defines the format for presenting reference suggestions to the use
 ## Existing Reference Reuse
 
 ```markdown
-### 🔄 Existing Reference Available
+### Existing Reference Available
 
 **Claim text:**
 > {claim_text}
@@ -155,11 +147,11 @@ This template defines the format for presenting reference suggestions to the use
 
 | Status | Count |
 |--------|-------|
-| ✅ Approved | {approved_count} |
-| 🔄 Using existing | {existing_count} |
-| ⏳ Pending | {pending_count} |
-| ❌ Skipped | {skipped_count} |
-| 🔍 Needs alternatives | {alternatives_count} |
+| Approved | {approved_count} |
+| Using existing | {existing_count} |
+| Pending | {pending_count} |
+| Skipped | {skipped_count} |
+| Needs alternatives | {alternatives_count} |
 
 ### Approved References
 
@@ -178,34 +170,8 @@ This template defines the format for presenting reference suggestions to the use
 - [ ] **Confirm all selections** - Proceed to insert citations
 - [ ] **Review flagged items** - {flagged_count} items need attention
 - [ ] **Request more alternatives** - Search again for specific claims
-- [ ] **Save and continue later** - Session will be preserved
 
 ---
-```
-
-## Progress Indicators
-
-### Visual Progress Bar
-
-```
-[██████████░░░░░░░░░░░░░░░░░░░░] 33% - Reviewing claim 4 of 12
-```
-
-Generation code:
-```
-filled = round(percentage / 100 * 30)
-empty = 30 - filled
-bar = "[" + "█" * filled + "░" * empty + "]"
-```
-
-### Status Messages
-
-```
-Searching PubMed for claim 3 of 12...
-Found 5 candidates for "statistical claim about survival rates"
-Analyzing reference quality...
-Generating recommendations...
-Waiting for your review...
 ```
 
 ## Interactive Commands
@@ -214,7 +180,6 @@ Users can respond with:
 
 ```
 approve 1        - Approve suggestion #1
-approve all      - Approve all recommended suggestions
 reject 2         - Reject suggestion #2, request alternatives
 skip             - Skip this claim (no citation needed)
 use existing 3   - Use existing reference #3
@@ -222,33 +187,5 @@ feedback: [text] - Provide specific feedback for search refinement
 next             - Move to next claim
 back             - Return to previous claim
 summary          - Show current summary
-save             - Save session and exit
 done             - Finalize all approved and proceed
-```
-
-## Session State Tracking
-
-The report maintains state for:
-
-```json
-{
-  "manuscript_path": "...",
-  "manuscript_hash": "...",
-  "timestamp": "...",
-  "current_claim_index": 0,
-  "claims": [
-    {
-      "id": 1,
-      "text": "...",
-      "type": "...",
-      "location": "...",
-      "status": "pending|approved|skipped|needs_alternatives",
-      "selected_reference": null,
-      "suggestions": [...],
-      "user_feedback": "..."
-    }
-  ],
-  "approved_references": [],
-  "session_complete": false
-}
 ```

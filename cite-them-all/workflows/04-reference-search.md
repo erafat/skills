@@ -2,324 +2,211 @@
 
 ## Overview
 
-This workflow searches PubMed (and optionally bioRxiv/medRxiv) to find appropriate references for each claim needing citations.
+Search PubMed (and optionally bioRxiv/medRxiv) for references to support each claim. Uses explicit MCP tool calls.
 
-## Step 1: Confirm Search Sources
-
-```
-1. Load search source preferences from config
-
-2. Confirm with user:
-"I will search the following databases for references:
-
-✅ PubMed (peer-reviewed literature)
-{❌/✅} bioRxiv (biology preprints)
-{❌/✅} medRxiv (medical preprints)
-
-Change search sources? (yes/no):"
-
-3. If yes, allow user to toggle sources
-
-4. Confirm search depth:
-"Search depth:
-- Standard: 5 candidates per claim (faster)
-- In-depth: 10 candidates per claim (more thorough)
-
-Current setting: {setting}. Change? (yes/no):"
-```
-
-## Step 2: Prepare Search Queries
+## Step 1: Confirm Search Settings
 
 ```
-For each claim needing new references:
+1. Confirm sources:
+   "Searching: PubMed {+ bioRxiv/medRxiv if enabled}
+    Candidates per claim: 5
+    Change settings? (yes/no)"
 
-1. Extract search keywords from claim:
-   - Key nouns and medical/scientific terms
+2. If yes, allow toggling sources and candidate count
+```
+
+## Step 2: Build Search Queries
+
+```
+For each claim needing a new reference:
+
+1. Extract search keywords:
+   - Key scientific/medical terms from the claim
    - Remove common words (the, a, is, are)
-   - Identify MeSH terms where applicable
+   - Identify potential MeSH terms
 
-2. Build PubMed query:
-   Primary query: "{term1} AND {term2} AND {term3}"
+2. Build primary PubMed query:
+   "{term1} AND {term2} AND {term3}"
 
-   Add filters based on preferences:
-   - Date range: AND ("2015"[Date - Publication] : "3000"[Date - Publication])
-   - Article type: AND (Review[Publication Type]) -- if prefer_reviews
+   Add date filter if prefer_recent:
+   date_from: "{current_year - 10}"
 
 3. Build fallback queries (if primary returns few results):
    - Broader: "{term1} AND {term2}"
-   - Related terms: Use MeSH synonyms
+   - With MeSH: "{term1}[MeSH Terms] AND {term2}"
 
-4. Store queries:
-{
-  "claim_id": 7,
-  "primary_query": "metformin AND hepatic gluconeogenesis AND mechanism",
-  "fallback_queries": [
-    "metformin AND glucose production",
-    "metformin AND liver AND diabetes"
-  ]
-}
+Example:
+  Claim: "Metformin inhibits hepatic gluconeogenesis"
+  Primary: "metformin AND hepatic gluconeogenesis AND mechanism"
+  Fallback: "metformin AND gluconeogenesis"
 ```
 
-## Step 3: Execute Searches
+## Step 3: Execute PubMed Searches
 
 ```
 For each claim:
 
-1. Display progress:
-   "[████████████████████░░░░░░░░░░] 65% - Searching for claim {n} of {total}"
-   "Query: {query}"
+1. Report: "Searching PubMed for claim {n} of {total}..."
 
-2. Search PubMed:
-   - Execute primary query
-   - Retrieve top {search_depth} results
-   - If < 3 results, try fallback queries
+2. Call search_articles:
+   - query: primary query
+   - max_results: 10
+   - sort: "relevance"
+   - date_from: (if prefer_recent)
 
-3. Search preprint servers (if enabled):
-   - bioRxiv: Search recent preprints
-   - medRxiv: Search recent preprints
-   - Mark results as [PREPRINT]
+3. If < 3 results, try fallback queries
 
-4. For each result, fetch:
-   - PMID
+4. For top results, call get_article_metadata with the PMIDs
+   This returns for each paper:
    - Title
    - Authors
    - Journal
    - Year
    - Abstract
    - DOI
-   - Citation count (if available)
-   - Article type (review/primary research)
-
-5. Handle rate limiting:
-   - If rate limited, display: "Rate limit reached. Waiting..."
-   - Implement exponential backoff
-   - Continue after delay
-
-6. Store results:
-{
-  "claim_id": 7,
-  "search_results": [
-    {
-      "pmid": "12345678",
-      "title": "Metformin inhibits hepatic gluconeogenesis...",
-      "authors": ["Smith JA", "Jones BC"],
-      "journal": "Diabetes",
-      "year": 2023,
-      "abstract": "...",
-      "doi": "10.2337/db23-0123",
-      "citation_count": 45,
-      "article_type": "primary_research",
-      "is_preprint": false,
-      "source": "pubmed"
-    }
-  ]
-}
+   - Publication type (review, clinical trial, etc.)
+   - MeSH terms
 ```
 
-## Step 4: Analyze and Rank Results
+## Step 3b: Expand with Related Articles (if needed)
+
+```
+If initial search returns fewer than 3 relevant results:
+
+1. Take the PMID of the best result found
+2. Call find_related_articles with that PMID
+3. Call get_article_metadata for the top related articles
+4. Add to candidate pool
+
+This uses PubMed's word-weighted similarity analysis to find
+papers that keyword search missed.
+```
+
+## Step 4: Search Preprint Servers (if enabled)
+
+```
+IMPORTANT: bioRxiv/medRxiv search_preprints has NO keyword search.
+It can only browse by date range and subject category.
+
+Strategy:
+1. Determine the relevant bioRxiv category for this claim
+   (use get_categories to see available categories)
+
+2. Use search_preprints with:
+   - recent_days: 90
+   - category: relevant category
+   - limit: 20
+
+3. Manually assess titles for relevance to the claim
+
+4. For any relevant preprints, use get_preprint for full metadata
+
+5. Mark all preprint results clearly:
+   "[PREPRINT - NOT PEER REVIEWED]"
+
+Note: Most claims are better served by PubMed's peer-reviewed
+literature. Preprints are supplementary.
+```
+
+## Step 5: Analyze and Rank Results
 
 ```
 For each search result:
 
-1. Relevance scoring (0-100):
-   - Title match with claim keywords: +30 max
-   - Abstract discusses claim topic: +40 max
-   - Recent publication (last 5 years): +10
-   - High citation count: +10
-   - From preferred journal: +10
+1. Relevance assessment (based on available data):
+   - Does the title relate to the claim?
+   - Does the abstract discuss the claim topic?
+   - Is the paper recent (last 5 years)?
+   - Is it the right article type? (review vs primary)
+   - Is the journal recognized in this field?
 
-2. Quality indicators:
-   - Citation count relative to field
-   - Journal reputation (impact factor proxy)
-   - Article type (review vs primary)
-   - Open access status
-
-3. Generate relevance explanation:
+2. Generate a relevance explanation:
    "This paper directly addresses metformin's mechanism of action
-    on hepatic glucose production, reporting a 30% reduction in
-    gluconeogenesis through AMPK activation."
+    on hepatic glucose production."
+
+3. Note article type from get_article_metadata:
+   - Review / Primary research / Clinical trial / Meta-analysis / Case report
 
 4. Detect controversies:
-   - If results show conflicting conclusions
-   - Flag claim as "controversial"
+   - If results show conflicting conclusions, flag the claim
    - Include papers from both perspectives
 
-5. Store analysis:
-{
-  "result_id": "pmid_12345678",
-  "relevance_score": 85,
-  "quality_metrics": {
-    "citation_count": 45,
-    "citation_percentile": "top 20%",
-    "journal_reputation": "high",
-    "article_type": "primary_research",
-    "open_access": true
-  },
-  "relevance_explanation": "Directly addresses claim...",
-  "recommended": true
-}
+5. Select top 5 candidates per claim, with the best marked [RECOMMENDED]
 ```
 
-## Step 5: Select Top Candidates
+## Step 5b: Deep Verification (optional, for top candidates)
 
 ```
-For each claim:
+For the top candidate per claim:
 
-1. Rank results by combined score:
-   combined_score = relevance_score * 0.7 + quality_score * 0.3
+1. Use convert_article_ids to check for PMCID
+2. If PMCID exists, use get_full_text_article to retrieve full text
+3. Search the full text for content directly supporting the claim
+4. Note findings in the relevance explanation
 
-2. Select top candidates:
-   - Standard depth: Top 5
-   - In-depth: Top 10
-
-3. Mark recommended choice:
-   - Highest combined score gets "RECOMMENDED" badge
-   - Flag any close alternatives
-
-4. Handle special cases:
-   - Controversial claims: Include opposing views
-   - No good matches: Flag for user, suggest query refinement
-   - All preprints: Warn user about peer review status
-
-5. Update session state:
-{
-  "claim_id": 7,
-  "candidates": [
-    {
-      "rank": 1,
-      "pmid": "12345678",
-      "recommended": true,
-      "reason": "Best match: directly addresses mechanism, highly cited"
-    },
-    {
-      "rank": 2,
-      "pmid": "23456789",
-      "recommended": false,
-      "reason": "Good alternative: recent review article"
-    }
-  ],
-  "controversial": false,
-  "search_complete": true
-}
+This helps distinguish papers that merely mention the topic
+from papers that provide direct evidence for the claim.
 ```
 
-## Step 6: Handle No Results / Poor Results
+## Step 6: Handle Poor Results
 
 ```
-If no suitable results found:
+If no suitable results found for a claim:
 
-1. Display:
-   "⚠️ Claim #{n}: Limited results found
+"Claim #{n}: Limited results found
 
-   Claim: '{claim_text}'
-   Query: '{query}'
-   Results: {count} papers, none highly relevant
+Claim: '{claim_text}'
+Query: '{query}'
 
-   Options:
-   a) Suggest alternative search terms
-   b) Broaden the search
-   c) Try different databases
-   d) Skip this claim (user will find reference manually)
+Options:
+a) Suggest alternative search terms
+b) Broaden the search
+c) Try find_related_articles with a related paper
+d) Skip (find reference manually)
 
-   What would you like to do?"
-
-2. If user suggests terms:
-   - Re-run search with new terms
-   - Add to session for learning
-
-3. If user skips:
-   - Mark claim as "manual_reference_needed"
-   - Continue with other claims
+What would you like to do?"
 ```
 
-## Step 7: Progress Summary
+## Step 7: Search Summary
 
 ```
-After all searches complete:
-
-Display:
 "## Search Complete
-
-[██████████████████████████░░░░] 80% - Reference search complete
-
-### Results Summary
 
 | Status | Claims |
 |--------|--------|
-| ✅ Good matches found | {n} |
-| ⚠️ Limited options | {n} |
-| ❌ No suitable results | {n} |
-| ⚡ Controversial (multiple views) | {n} |
+| Good matches found | {n} |
+| Limited options | {n} |
+| No suitable results | {n} |
+| Controversial (multiple views) | {n} |
 
-### Database Usage
+Database usage:
 - PubMed: {n} papers retrieved
-- bioRxiv: {n} preprints retrieved
-- medRxiv: {n} preprints retrieved
-
-Total unique references found: {total}
+{- bioRxiv/medRxiv: {n} preprints retrieved}
 
 Ready for interactive review."
 ```
 
-## Completion
+## Step 8: Proceed
 
 ```
-1. Update session state:
-   - current_phase: "interactive_review"
-   - search_completed_at: timestamp
-   - last_updated: timestamp
-
-2. Save session
-
-3. Display:
-   "[██████████████████████████░░░░] 80% - Search phase complete"
-
-4. Proceed to Workflow 05: Interactive Review
+Proceed to Workflow 05: Interactive Review
 ```
 
 ## Error Handling
 
 ### PubMed Unreachable
 ```
-Display: "Error: Cannot connect to PubMed. Check internet connection."
-Action:
-- Retry with exponential backoff (3 attempts)
-- Offer to continue with preprint servers only
-- Save progress and offer to resume later
-```
-
-### Rate Limiting
-```
-Display: "PubMed rate limit reached."
-Action:
-- Show countdown: "Resuming in {seconds}..."
-- Implement 1s base delay, doubling each retry
-- Max delay: 60 seconds
-- Continue automatically after delay
+"Cannot connect to PubMed. Check internet connection."
+Offer to retry or proceed with preprint servers only.
 ```
 
 ### Search Timeout
 ```
-Display: "Search timeout for claim #{n}."
-Action:
-- Save partial results
-- Offer to retry or skip
-- Continue with other claims
-```
-
-### API Errors
-```
-Display: "API error: {error_message}"
-Action:
-- Log error details
-- Retry once
-- If persistent, mark claim for manual handling
+"Search timeout for claim #{n}."
+Save partial results, offer to retry or skip.
 ```
 
 ### Preprint Server Issues
 ```
-Display: "Warning: Could not reach {server}. Continuing with PubMed only."
-Action:
-- Continue search with available sources
-- Note limitation in results
+"Could not reach bioRxiv/medRxiv. Continuing with PubMed only."
 ```

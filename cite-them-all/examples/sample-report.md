@@ -1,15 +1,8 @@
 # Citation Review Report
 
 **Manuscript:** sample-manuscript.md
-**Generated:** 2026-01-29 14:30:00
 **Claims identified:** 18
 **References suggested:** 54
-
----
-
-## Progress
-
-[████████████████████░░░░░░░░░░] 67% - Reviewing claim 12 of 18
 
 ---
 
@@ -22,23 +15,22 @@
 
 **Type:** Statistical | **Priority:** HIGH
 
-**Status:** ✅ Approved
+**Status:** Approved
 
 ---
 
 #### Suggested References
 
-**#1** ⭐ RECOMMENDED
+**#1** [RECOMMENDED]
 
-📄 **Global, regional, and national burden of diabetes from 1990 to 2021**
-👤 GBD 2021 Diabetes Collaborators | 📅 2023 | 📰 *The Lancet*
+**Title:** Global, regional, and national burden of diabetes from 1990 to 2021
+**Authors:** GBD 2021 Diabetes Collaborators
+**Journal:** *The Lancet* (2023)
 
-| Metric | Value |
+| Detail | Value |
 |--------|-------|
-| 📊 Citations | 892 (Top 1%) |
-| 📚 Type | Primary Research |
-| 🏆 Journal | High Impact |
-| 🔓 Access | Open Access |
+| Type | Primary Research |
+| Open Access | Yes |
 
 **Why recommended:**
 > This comprehensive GBD study provides the most current and authoritative global prevalence data for diabetes, reporting 462 million affected individuals, which directly matches the claim.
@@ -46,9 +38,9 @@
 **Abstract excerpt:**
 > Diabetes is a major global health concern, with prevalence increasing worldwide. We estimated the global burden of diabetes from 1990 to 2021...
 
-🔗 PMID: 37356446 | DOI: 10.1016/S0140-6736(23)01301-6
+**PMID:** 37356446 | **DOI:** [10.1016/S0140-6736(23)01301-6](https://doi.org/10.1016/S0140-6736(23)01301-6)
 
-**Selected:** ✅ Reference #1 approved
+**Selected:** Reference #1 approved
 
 ---
 
@@ -61,7 +53,7 @@
 
 **Type:** Statistical | **Priority:** HIGH
 
-**Status:** ✅ Approved (Using existing reference)
+**Status:** Approved (Using existing reference)
 
 **Note:** This claim is supported by existing reference [1] (IDF Diabetes Atlas).
 
@@ -76,23 +68,22 @@
 
 **Type:** Statistical | **Priority:** HIGH
 
-**Status:** ⏳ Pending Review
+**Status:** Pending Review
 
 ---
 
 #### Suggested References
 
-**#1** ⭐ RECOMMENDED
+**#1** [RECOMMENDED]
 
-📄 **Global Economic Burden of Diabetes in Adults: Projections From 2015 to 2030**
-👤 Bommer C, Sagalova V, Heesemann E, et al. | 📅 2018 | 📰 *Diabetes Care*
+**Title:** Global Economic Burden of Diabetes in Adults: Projections From 2015 to 2030
+**Authors:** Bommer C, Sagalova V, Heesemann E, et al.
+**Journal:** *Diabetes Care* (2018)
 
-| Metric | Value |
+| Detail | Value |
 |--------|-------|
-| 📊 Citations | 1,247 (Top 1%) |
-| 📚 Type | Primary Research |
-| 🏆 Journal | High Impact |
-| 🔓 Access | Subscription |
+| Type | Primary Research |
+| Open Access | No |
 
 **Why recommended:**
 > This study provides comprehensive economic projections for global diabetes costs, estimating costs exceeding $800 billion by 2030, supporting the magnitude claimed.
@@ -100,26 +91,25 @@
 **Abstract excerpt:**
 > OBJECTIVE: To project the global economic burden of diabetes in adults aged 20-79 years for the period 2015-2030...
 
-🔗 PMID: 29475843 | DOI: 10.2337/dc17-1962
+**PMID:** 29475843 | **DOI:** [10.2337/dc17-1962](https://doi.org/10.2337/dc17-1962)
 
 ---
 
 **#2**
 
-📄 **IDF Diabetes Atlas: Global estimates of diabetes prevalence for 2017 and projections for 2045**
-👤 Cho NH, Shaw JE, Karuranga S, et al. | 📅 2018 | 📰 *Diabetes Research and Clinical Practice*
+**Title:** IDF Diabetes Atlas: Global estimates of diabetes prevalence for 2017 and projections for 2045
+**Authors:** Cho NH, Shaw JE, Karuranga S, et al.
+**Journal:** *Diabetes Research and Clinical Practice* (2018)
 
-| Metric | Value |
+| Detail | Value |
 |--------|-------|
-| 📊 Citations | 4,521 (Top 0.1%) |
-| 📚 Type | Review |
-| 🏆 Journal | Moderate Impact |
-| 🔓 Access | Subscription |
+| Type | Review |
+| Open Access | No |
 
 **Why recommended:**
 > IDF Atlas provides authoritative global diabetes statistics including economic burden estimates, widely cited as the standard source for such data.
 
-🔗 PMID: 29496507 | DOI: 10.1016/j.diabres.2018.02.023
+**PMID:** 29496507 | **DOI:** [10.1016/j.diabres.2018.02.023](https://doi.org/10.1016/j.diabres.2018.02.023)
 
 ---
 
@@ -140,28 +130,27 @@
 
 **Type:** Factual assertion | **Priority:** HIGH
 
-**Status:** ⏳ Pending Review
+**Status:** Pending Review
 
 ---
 
 #### Suggested References
 
-**#1** ⭐ RECOMMENDED
+**#1** [RECOMMENDED]
 
-📄 **Metformin suppresses gluconeogenesis by inhibiting mitochondrial glycerophosphate dehydrogenase**
-👤 Madiraju AK, Erion DM, Rahimi Y, et al. | 📅 2014 | 📰 *Nature*
+**Title:** Metformin suppresses gluconeogenesis by inhibiting mitochondrial glycerophosphate dehydrogenase
+**Authors:** Madiraju AK, Erion DM, Rahimi Y, et al.
+**Journal:** *Nature* (2014)
 
-| Metric | Value |
+| Detail | Value |
 |--------|-------|
-| 📊 Citations | 1,823 (Top 0.5%) |
-| 📚 Type | Primary Research |
-| 🏆 Journal | Highest Impact |
-| 🔓 Access | Open Access |
+| Type | Primary Research |
+| Open Access | Yes |
 
 **Why recommended:**
 > This landmark Nature paper directly elucidates the mechanism by which metformin inhibits hepatic gluconeogenesis, providing definitive evidence for the claimed mechanism.
 
-🔗 PMID: 24931786 | DOI: 10.1038/nature13270
+**PMID:** 24931786 | **DOI:** [10.1038/nature13270](https://doi.org/10.1038/nature13270)
 
 ---
 
@@ -174,28 +163,27 @@
 
 **Type:** Statistical | **Priority:** HIGH
 
-**Status:** ⏳ Pending Review
+**Status:** Pending Review
 
 ---
 
 #### Suggested References
 
-**#1** ⭐ RECOMMENDED
+**#1** [RECOMMENDED]
 
-📄 **Reduction in the Incidence of Type 2 Diabetes with Lifestyle Intervention or Metformin**
-👤 Diabetes Prevention Program Research Group | 📅 2002 | 📰 *New England Journal of Medicine*
+**Title:** Reduction in the Incidence of Type 2 Diabetes with Lifestyle Intervention or Metformin
+**Authors:** Diabetes Prevention Program Research Group
+**Journal:** *New England Journal of Medicine* (2002)
 
-| Metric | Value |
+| Detail | Value |
 |--------|-------|
-| 📊 Citations | 15,847 (Top 0.01%) |
-| 📚 Type | Primary Research (RCT) |
-| 🏆 Journal | Highest Impact |
-| 🔓 Access | Open Access |
+| Type | Primary Research (RCT) |
+| Open Access | Yes |
 
 **Why recommended:**
 > This is the original DPP study publication that reports the exact 31% reduction statistic mentioned in the claim. It is the primary source and most appropriate citation.
 
-🔗 PMID: 11832527 | DOI: 10.1056/NEJMoa012512
+**PMID:** 11832527 | **DOI:** [10.1056/NEJMoa012512](https://doi.org/10.1056/NEJMoa012512)
 
 ---
 
@@ -203,11 +191,11 @@
 
 | Status | Count |
 |--------|-------|
-| ✅ Approved | 8 |
-| 🔄 Using existing | 3 |
-| ⏳ Pending | 7 |
-| ❌ Skipped | 0 |
-| 🔍 Needs alternatives | 0 |
+| Approved | 8 |
+| Using existing | 3 |
+| Pending | 7 |
+| Skipped | 0 |
+| Needs alternatives | 0 |
 
 ### Approved References
 
@@ -228,6 +216,5 @@
 
 - [ ] **Continue reviewing** - 7 claims remaining
 - [ ] **Finalize now** - Apply 8 approved + 3 existing references
-- [ ] **Save and continue later** - Session will be preserved
 
 ---
