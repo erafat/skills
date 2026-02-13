@@ -39,7 +39,12 @@ Default output folder: `<markdown-dir>/<markdown-stem>-xhs-cards`
 - Check `manifest.json` for count and filenames.
 - If images are missing, report placeholders and list unresolved image paths.
 
-4. Report clearly:
+4. Optional publish to Xiaohongshu:
+- Add `--publish-xhs` to publish immediately after rendering.
+- Use `--publish-title` / `--publish-desc` overrides when needed.
+- For safe validation, run once with `--publish-dry-run`.
+
+5. Report clearly:
 - Provide absolute output directory.
 - Provide absolute paths for all generated cards.
 - Call out any missing/remote image limitations.
@@ -79,6 +84,23 @@ scripts/run_md_to_xhs_cards.sh content/post.md \
   --text-color "#141414" \
   --muted-color "#6f6f6f" \
   --line-height-scale 1.80
+```
+
+Render + publish in one command:
+
+```bash
+scripts/run_md_to_xhs_cards.sh content/post.md \
+  --publish-xhs \
+  --publish-title "医生的病历写给谁看" \
+  --publish-desc "关于病历、医疗决策，与医生的身份危机"
+```
+
+Dry-run publish validation:
+
+```bash
+scripts/run_md_to_xhs_cards.sh content/post.md \
+  --publish-xhs \
+  --publish-dry-run
 ```
 
 ## User Option Packs
@@ -131,6 +153,15 @@ scripts/run_md_to_xhs_cards.sh content/post.md \
 ```bash
 python3 -m pip install pillow
 ```
+
+- Optional publishing uses `scripts/publish_xhs.py`:
+  - Local mode: `python3 -m pip install xhs`
+  - API mode (`--publish-api-mode`): `python3 -m pip install requests`
+- Cookie lookup supports:
+  - `--publish-cookie`
+  - `XHS_COOKIE` environment variable
+  - `.env` in current directory / skill directory
+  - existing `~/.claude/skills/xhs-note-creator/.env` (for shared setup)
 
 ## References
 

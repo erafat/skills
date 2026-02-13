@@ -22,6 +22,8 @@
 - Optional cover metadata: `--title`, `--subtitle`, `--author`, `--cover-image`
 - Optional typography tuning: `--line-height-scale` (default `1.80`)
 - Signature options: `--signature-text` and `--cover-author` (cover author is off by default)
+- Publish options: `--publish-xhs`, `--publish-title`, `--publish-desc`, `--publish-dry-run`
+- Advanced publish options: `--publish-private`, `--publish-post-time`, `--publish-api-mode`, `--publish-api-url`, `--publish-cookie`
 
 ## Image Rules
 
@@ -66,4 +68,21 @@ Signature-at-end preset:
 scripts/run_md_to_xhs_cards.sh path/to/post.md \
   --author "鹿不角" \
   --signature-text "-- 鹿不角"
+```
+
+Render and publish:
+
+```bash
+scripts/run_md_to_xhs_cards.sh path/to/post.md \
+  --publish-xhs \
+  --publish-title "标题" \
+  --publish-desc "正文摘要"
+```
+
+Validate publish payload without posting:
+
+```bash
+scripts/run_md_to_xhs_cards.sh path/to/post.md \
+  --publish-xhs \
+  --publish-dry-run
 ```

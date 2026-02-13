@@ -17,6 +17,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -909,6 +910,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--author", help="Cover author name; rendered as 作者：<name>.")
     parser.add_argument("--cover-author", action="store_true", help="Render author on cover (disabled by default).")
     parser.add_argument("--signature-text", default="", help="Signature shown on the last page (e.g. '-- 鹿不角').")
+    parser.add_argument("--publish-xhs", action="store_true", help="Publish generated cards to Xiaohongshu.")
+    parser.add_argument("--publish-title", help="XHS publish title override (default: cover title or markdown stem).")
+    parser.add_argument("--publish-desc", default="", help="XHS publish description override.")
+    parser.add_argument("--publish-private", action="store_true", help="Publish as private note.")
+    parser.add_argument("--publish-post-time", help="Scheduled publish time in 'YYYY-MM-DD HH:MM:SS'.")
+    parser.add_argument("--publish-api-mode", action="store_true", help="Use xhs-api service mode.")
+    parser.add_argument("--publish-api-url", help="xhs-api base URL (default: env XHS_API_URL or localhost).")
+    parser.add_argument("--publish-cookie", help="Explicit cookie string (otherwise use XHS_COOKIE/.env).")
+    parser.add_argument("--publish-dry-run", action="store_true", help="Validate publish payload without posting.")
     return parser.parse_args()
 
 
@@ -918,6 +928,73 @@ def validate_color(name: str, value: str) -> str:
     except ValueError as exc:
         raise SystemExit(f"Invalid color for {name}: {value}") from exc
     return value
+
+
+def build_default_publish_desc(blocks: List[Block], cover: Optional[CoverSpec], limit: int = 900) -> str:
+    parts: List[str] = []
+    if cover and cover.subtitle:
+        parts.append(cover.subtitle.strip())
+
+    for block in blocks:
+        if block.kind in {"paragraph", "quote", "heading", "subheading"} and block.text.strip():
+            parts.append(block.text.strip())
+        if block.kind == "list" and block.items:
+            for item in block.items:
+                item = item.strip()
+                if item:
+                    parts.append(item)
+
+    if not parts:
+        return ""
+
+    joined = "\n\n".join(parts)
+    if len(joined) <= limit:
+        return joined
+    return joined[: max(0, limit - 1)].rstrip() + "…"
+
+
+def publish_generated_cards(
+    manifest_path: Path,
+    title: str,
+    desc: str,
+    publish_private: bool,
+    publish_post_time: Optional[str],
+    publish_api_mode: bool,
+    publish_api_url: Optional[str],
+    publish_cookie: Optional[str],
+    publish_dry_run: bool,
+) -> int:
+    publish_script = Path(__file__).with_name("publish_xhs.py")
+    if not publish_script.exists():
+        print(f"Publish script not found: {publish_script}")
+        return 1
+
+    cmd = [
+        sys.executable,
+        str(publish_script),
+        "--manifest",
+        str(manifest_path),
+        "--title",
+        title,
+    ]
+    if desc:
+        cmd.extend(["--desc", desc])
+    if publish_private:
+        cmd.append("--private")
+    if publish_post_time:
+        cmd.extend(["--post-time", publish_post_time])
+    if publish_api_mode:
+        cmd.append("--api-mode")
+    if publish_api_url:
+        cmd.extend(["--api-url", publish_api_url])
+    if publish_cookie:
+        cmd.extend(["--cookie", publish_cookie])
+    if publish_dry_run:
+        cmd.append("--dry-run")
+
+    print("Starting XHS publish step...")
+    result = subprocess.run(cmd, check=False)
+    return result.returncode
 
 
 def main() -> int:
@@ -1000,7 +1077,40 @@ def main() -> int:
         },
         "signature_text": signature_text,
     }
+
     manifest_path = output_dir / "manifest.json"
+    publish_exit_code = 0
+    if args.publish_xhs:
+        publish_title = (args.publish_title or (cover.title if cover else "") or markdown_path.stem).strip()
+        if len(publish_title) > 20:
+            print("Publish title exceeds 20 chars and will be truncated.")
+            publish_title = publish_title[:20]
+        publish_desc = args.publish_desc.strip() or build_default_publish_desc(blocks, cover)
+        manifest["publish"] = {
+            "requested": True,
+            "title": publish_title,
+            "private": args.publish_private,
+            "post_time": args.publish_post_time or "",
+            "api_mode": args.publish_api_mode,
+            "dry_run": args.publish_dry_run,
+            "exit_code": None,
+        }
+        manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8")
+        publish_exit_code = publish_generated_cards(
+            manifest_path=manifest_path,
+            title=publish_title,
+            desc=publish_desc,
+            publish_private=args.publish_private,
+            publish_post_time=args.publish_post_time,
+            publish_api_mode=args.publish_api_mode,
+            publish_api_url=args.publish_api_url,
+            publish_cookie=args.publish_cookie,
+            publish_dry_run=args.publish_dry_run,
+        )
+        manifest["publish"]["exit_code"] = publish_exit_code
+    else:
+        manifest["publish"] = {"requested": False}
+
     manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8")
 
     print(f"Rendered {len(cards)} card(s) to: {output_dir}")
@@ -1011,7 +1121,9 @@ def main() -> int:
         for src in renderer.missing_images:
             print(f"  * {src}")
     print(f"- {manifest_path}")
-    return 0
+    if publish_exit_code != 0:
+        print(f"XHS publish failed with exit code: {publish_exit_code}")
+    return publish_exit_code
 
 
 if __name__ == "__main__":
