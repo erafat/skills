@@ -13,13 +13,11 @@ skills/                                    # Your repository root
 │   ├── INSTALLATION.md                    # Installation guide
 │   ├── EXAMPLES.md                        # Usage examples
 │   └── (add more as needed)
-├── gmail-invoice-processor/               # Skill source code
-│   ├── SKILL.md                          # Core skill instructions
-│   ├── scripts/
-│   │   ├── extract_invoice_data.py       # PDF extraction
-│   │   └── gmail_attachment_helper.py    # Multi-layer utilities
-│   └── references/
-│       └── workflow.md                   # Technical documentation
+├── skills/                                # Skill catalog parent
+│   ├── README.md                         # Index of all skills
+│   ├── gmail-invoice-processor/          # Gmail invoice skill source
+│   ├── cite-them-all/                    # Citation assistant skill source
+│   └── md-to-xhs-cards/                  # Markdown-to-XHS cards skill source
 ├── .gitignore                            # Git ignore rules
 ├── CHANGELOG.md                          # Version history
 ├── CONTRIBUTING.md                       # Contribution guidelines

@@ -86,6 +86,7 @@ Enhancement suggestions are tracked as GitHub issues. Create an issue and provid
 ```bash
 # Clone your fork
 git clone https://github.com/YOUR_USERNAME/skills.git
+cd skills
 cd skills/gmail-invoice-processor
 
 # Install dependencies

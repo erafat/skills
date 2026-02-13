@@ -6,6 +6,8 @@
 
 Automate your invoice workflow by extracting vendor names and amounts from Gmail invoice PDFs and creating organized Excel summaries.
 
+> Looking for all skills in this repo? See [`skills/README.md`](skills/README.md).
+
 ## 🎯 What It Does
 
 This skill enables Claude to:
@@ -156,6 +158,7 @@ Gmail API → Multi-Layer Processor → Data Extractor → Excel Generator
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/erafat/skills.git
+   cd skills
    cd skills/gmail-invoice-processor
    ```
 
@@ -179,7 +182,7 @@ Gmail API → Multi-Layer Processor → Data Extractor → Excel Generator
 Package the skill for distribution:
 
 ```bash
-python /path/to/package_skill.py ./gmail-invoice-processor ./dist
+python /path/to/package_skill.py ./skills/gmail-invoice-processor ./dist
 ```
 
 This creates `gmail-invoice-processor.skill` in the `./dist` directory.
