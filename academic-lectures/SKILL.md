@@ -10,7 +10,10 @@ Builds structured medical lecture .pptx presentations with speaker notes, eviden
 
 ## Step 1: Intake
 
-Use AskUserQuestion to collect all of the following at once:
+Collect all of the following at once.
+
+- If Codex is running in Plan mode, use `request_user_input`.
+- Otherwise, ask the same intake questions in normal chat and proceed once the answers are clear.
 
 1. **Topic** — What is the lecture topic?
 2. **Audience** — Who is the audience? Options: medical students / residents / fellows / attendings / mixed clinical (nurses, techs, other staff)
@@ -104,13 +107,30 @@ If user opted for AI-generated images:
 1. Review `outline.md` — identify all slides with a non-None image recommendation
 2. Eligible types: anatomical diagram, pathophysiology flowchart, data visualization, clinical scenario illustration
 3. Skip: title, agenda, learning objectives, take-home points, references, and pure text/table slides
-4. For each eligible slide, craft a detailed Gemini image prompt: medically accurate, clean educational style, appropriately labeled, white/light background
-5. Invoke `baoyu-danger-gemini-web` skill for each image
-6. Save images to `resources/` and update the image field in `outline.md` with the filename
+4. For each eligible slide, craft a detailed image prompt: medically accurate, clean educational style, appropriately labeled when appropriate, white/light background unless the lecture design clearly calls for another palette
+5. Use the bundled local Gemini generator first:
+
+   ```bash
+   python3 scripts/gemini_image_gen.py \
+     --prompt-file /absolute/path/to/prompt.txt \
+     --output /absolute/path/to/project/resources/images/generated \
+     --aspect-ratio 16:9 \
+     --image-size 2k
+   ```
+
+   Notes:
+   - The script lives at `scripts/gemini_image_gen.py`
+   - It accepts `--prompt` or `--prompt-file`
+   - It resolves API credentials from `GEMINI_API_KEY`, `GOOGLE_API_KEY`, or macOS Keychain service `codex-gemini-api-key`
+   - Use a per-slide prompt file when prompts are long or need to be preserved for auditing
+6. If the local Gemini script is unavailable or fails after reasonable retries, fall back to `baoyu-image-gen` if that skill is installed in the current Codex environment
+7. Save images under `resources/images/generated/` and update the image field in `outline.md` with the filename or relative path
 
 ## Step 8: Assemble .pptx
 
 Invoke `anthropic-skills:pptx` to build the final presentation from `outline.md`.
+
+If that Claude-specific workflow is not available in the current environment, stop after producing a complete project folder with `outline.md`, notes, references, and generated images, then hand off to the local PPTX workflow the user prefers.
 
 Instructions to pass:
 - Ask user for template preference or let pptx skill choose a clean professional academic theme
