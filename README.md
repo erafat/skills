@@ -11,6 +11,11 @@ This repository contains multiple self-contained skills. Each skill has its own 
 - Purpose: Detects claims in Markdown manuscripts that need citations and helps add references from biomedical sources.
 - Entry: [`cite-them-all/SKILL.md`](./cite-them-all/SKILL.md)
 
+### `academic-lectures`
+- Location: [`academic-lectures/`](./academic-lectures)
+- Purpose: Builds complete medical academic lecture presentations with structured intake, lecture outlines, references, speaker notes, and `.pptx`-oriented workflow guidance.
+- Entry: [`academic-lectures/SKILL.md`](./academic-lectures/SKILL.md)
+
 ### `gmail-invoice-processor`
 - Location: [`gmail-invoice-processor/`](./gmail-invoice-processor)
 - Purpose: Processes Gmail invoice emails, extracts vendor/amount data, and generates structured summaries.
@@ -25,6 +30,7 @@ This repository contains multiple self-contained skills. Each skill has its own 
 
 ```text
 skills/
+├── academic-lectures/
 ├── cite-them-all/
 ├── gmail-invoice-processor/
 ├── md-to-xhs-cards/
