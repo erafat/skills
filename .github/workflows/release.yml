@@ -1,0 +1,51 @@
+name: Release Skill
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    
+    - name: Install dependencies
+      run: |
+        pip install pdfplumber openpyxl
+    
+    - name: Create release directory
+      run: mkdir -p release
+    
+    - name: Package skill
+      run: |
+        cd gmail-invoice-processor
+        zip -r ../release/gmail-invoice-processor.skill *
+    
+    - name: Get version from tag
+      id: get_version
+      run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+    
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: release/gmail-invoice-processor.skill
+        body_path: RELEASE_NOTES_${{ steps.get_version.outputs.VERSION }}.md
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: gmail-invoice-processor-skill
+        path: release/gmail-invoice-processor.skill
