@@ -1,0 +1,7 @@
+{
+  "citation_format": "apa",
+  "bibliography_location": "end_of_file",
+  "include_preprints": false,
+  "prefer_recent": true,
+  "recent_years": 10
+}
