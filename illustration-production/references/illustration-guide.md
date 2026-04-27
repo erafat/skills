@@ -326,12 +326,15 @@ Use for:
 - Chinese word / phrase / short-sentence visualizations
 - essay or social-cover graphics where the main idea is a word becoming an image
 - poster studies where type, metaphor, and image must operate as one field
+- modern flat geometric type posters where the core word becomes a semantic visual symbol through grid, color fields, transparent layers, and symbolic geometry
 
 Source reference:
 
 - X Article by `@xiaoxiaodong01`: `https://x.com/xiaoxiaodong01/status/2048652673826869294`
 - Article title: `GPT2: 字体美学+文字图鉴+大字报+瞳孔地震级 · 升级版`
 - Verbatim prompt stored at `references/semantic-typography-concept-poster-verbatim-prompt.md`.
+- Geometric typography option stored at `references/semantic-typography-geometric-poster-template.md`.
+- Example for `神经内科` stored at `references/semantic-typography-geometric-poster-shenjingneike.md`.
 
 Style DNA:
 

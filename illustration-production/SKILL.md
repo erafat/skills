@@ -30,6 +30,7 @@ Do not use this skill for ordinary prose editing, non-visual research, determini
 Read the guide first for any new or materially changed visual task:
 
 - `references/illustration-guide.md`
+- For a quick visual overview of what each style lane represents, read `references/style-lane-gallery.md`.
 
 Use existing project-local rules when they are more specific:
 
@@ -60,6 +61,9 @@ Current lanes:
 - `Minimal Academic Cover`: AED-style abstract specialist cover art.
 - `Swiss Editorial Clinical Flat`: clinical-academic slide illustrations and workshop visuals.
 - `Semantic Typography Concept Poster`: typography-led concept posters where a word or phrase becomes the image structure.
+  - Option: `Geometric Typographic Concept Poster`, for modern flat geometric posters where the core word becomes a semantic visual symbol through type, grid, color fields, transparent layers, and minimal symbolic geometry.
+  - Template: `references/semantic-typography-geometric-poster-template.md`
+  - Example: `references/semantic-typography-geometric-poster-shenjingneike.md`
 
 Do not invent a new lane casually. Promote a new lane only when it has a repeated use case, accepted example, descriptor, avoid list, and a reason existing lanes do not fit.
 
@@ -84,9 +88,11 @@ Do not invent a new lane casually. Promote a new lane only when it has a repeate
 - State the chosen lane and why it fits.
 
 4. Choose the tool path.
-- Default to OpenAI Image 2.0 for AI raster production.
-- Use Gemini / Nano Banana only when requested, when a verified project path requires it, or when OpenAI is unavailable or unsuitable.
-- Use code/SVG/HTML/CSS/slides when text, diagrams, layout, or geometry need deterministic control.
+- Default to OpenAI Image 2.0 for AI raster production through the Codex-native image generation tool.
+- When the user asks for Image 2.0, call the native Image 2.0 generation path directly. Do not require or check `OPENAI_API_KEY`, and do not route through CLI/API wrappers or substitute non-native generation paths.
+- If the native Image 2.0 tool is not exposed or callable in the current session, stop and report that exact tool-surface blocker. Do not substitute another renderer or create a lower-quality fallback unless the user explicitly authorizes that fallback after being told it is not Image 2.0.
+- Use Gemini / Nano Banana only when requested, when a verified project path requires it, or when OpenAI Image 2.0 is unsuitable; Gemini should run through the project-approved script/API path with credentials from environment, local untracked config, or macOS Keychain.
+- Use code/SVG/HTML/CSS/slides only for labels, layout, charts, diagrams, UI, or geometry that should remain deterministic, not as a replacement for requested Image 2.0 raster art.
 
 5. Label references by role.
 - style reference
@@ -112,7 +118,9 @@ Do not invent a new lane casually. Promote a new lane only when it has a repeate
 - output unit appropriate for the model
 
 8. Generate, draw, or hand off.
-- For raster image generation, use the `imagegen` skill/tool path when available.
+- For raster image generation, use the Codex-native OpenAI Image 2.0 generation path and save accepted outputs into the project workspace.
+- Never answer an Image 2.0 request with a non-native substitute.
+- If native Image 2.0 generation is unavailable, hand off with the final prompt set, reference roles, and blocker instead of silently downgrading.
 - For prompt-only tasks, deliver the prompt plus review checklist.
 - For deterministic visuals, build the visual in code or the appropriate document/presentation tool.
 
