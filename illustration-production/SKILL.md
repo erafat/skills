@@ -85,7 +85,7 @@ Do not invent a new lane casually. Promote a new lane only when it has a repeate
 
 4. Choose the tool path.
 - Default to OpenAI Image 2.0 for AI raster production through the Codex-native image generation tool.
-- When the user asks for Image 2.0, call the native Image 2.0 generation path directly. Do not require or check `OPENAI_API_KEY`, and do not route through CLI/API wrappers, BaoYu tooling, Gemini/Nano Banana, browser hacks, local drawing, SVG, canvas, or deterministic placeholder art.
+- When the user asks for Image 2.0, call the native Image 2.0 generation path directly. Do not require or check `OPENAI_API_KEY`, and do not route through CLI/API wrappers or substitute non-native generation paths.
 - If the native Image 2.0 tool is not exposed or callable in the current session, stop and report that exact tool-surface blocker. Do not substitute another renderer or create a lower-quality fallback unless the user explicitly authorizes that fallback after being told it is not Image 2.0.
 - Use Gemini / Nano Banana only when requested, when a verified project path requires it, or when OpenAI Image 2.0 is unsuitable; Gemini should run through the project-approved script/API path with credentials from environment, local untracked config, or macOS Keychain.
 - Use code/SVG/HTML/CSS/slides only for labels, layout, charts, diagrams, UI, or geometry that should remain deterministic, not as a replacement for requested Image 2.0 raster art.
@@ -115,7 +115,7 @@ Do not invent a new lane casually. Promote a new lane only when it has a repeate
 
 8. Generate, draw, or hand off.
 - For raster image generation, use the Codex-native OpenAI Image 2.0 generation path and save accepted outputs into the project workspace.
-- Never answer an Image 2.0 request by creating local vector drawings, CSS/SVG approximations, placeholder PNGs, or API-key-based substitutes.
+- Never answer an Image 2.0 request with a non-native substitute.
 - If native Image 2.0 generation is unavailable, hand off with the final prompt set, reference roles, and blocker instead of silently downgrading.
 - For prompt-only tasks, deliver the prompt plus review checklist.
 - For deterministic visuals, build the visual in code or the appropriate document/presentation tool.
