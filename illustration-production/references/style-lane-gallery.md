@@ -2,6 +2,8 @@
 
 Use this page as the quick "what does this style represent?" view before choosing a lane. For full production rules, read `references/illustration-guide.md`.
 
+Image paths are relative to this `references/` folder so they render in GitHub.
+
 ## Warm Editorial Analog Clarity
 
 Represents: thoughtful editorial explanation, essays, conceptual covers, knowledge visuals, reflective education.
@@ -13,6 +15,21 @@ Use when the image should feel humane, intelligent, quiet, and publication-ready
 Primary reference: `references/openai-image-2-reference-style-guide.md`
 
 Example asset family: `assets/style-guide/`
+
+Visual examples:
+
+<table>
+  <tr>
+    <td><img src="../assets/style-guide/gpt_img__1___1_.png.webp" alt="Art-directed product moodboard spread" width="220"></td>
+    <td><img src="../assets/style-guide/images-2-design-trends.png.webp" alt="Shape-driven editorial design board" width="220"></td>
+    <td><img src="../assets/style-guide/images-2-storybook.png.webp" alt="Sparse storybook path with poetic whitespace" width="220"></td>
+  </tr>
+  <tr>
+    <td>Art-directed moodboard: tactile, restrained, premium editorial layout.</td>
+    <td>Shape-driven design board: modular hierarchy, geometry, clean scan path.</td>
+    <td>Sparse storybook path: large white space, tiny vignettes, gentle pacing.</td>
+  </tr>
+</table>
 
 Avoid: glossy AI finish, stock-photo realism, clutter, cinematic lighting, cold corporate vector sameness.
 
@@ -26,6 +43,21 @@ Use when the asset needs empathy, sequence, character continuity, and patient-fa
 
 Canonical source: project-local Waiting Room Comics style files when present.
 
+Visual examples:
+
+<table>
+  <tr>
+    <td><img src="../assets/style-guide/images-2-indie-comic.png.webp" alt="Warm indie comic reference" width="220"></td>
+    <td><img src="../assets/style-guide/images-2-miami-comic.png.webp" alt="Retro pastel comic reference" width="220"></td>
+    <td><img src="../assets/style-guide/ChatGPT_Image_Apr_20__2026__09_39_01_PM__1_.png.webp" alt="Vintage adventure comic reference" width="220"></td>
+  </tr>
+  <tr>
+    <td>Indie comic warmth: intimate scenes, soft environment detail, human tone.</td>
+    <td>Retro pastel comic: bright journey energy, sun-faded print texture.</td>
+    <td>Adventure comic: bold mascot readability and strong panel energy.</td>
+  </tr>
+</table>
+
 Avoid: giant speech balloons, dense panel grids, melodrama, hero-doctor/passive-patient staging, generated clinical text.
 
 ## Minimal Academic Cover
@@ -37,6 +69,10 @@ Visual feel: one restrained abstract motif on warm paper, minimal text, strong t
 Use when the image should signal scholarship and topic identity without becoming an infographic.
 
 Canonical source: AED cover design docs when present.
+
+Visual examples:
+
+No dedicated accepted cover image is bundled in this skill yet. Use the visual discipline from Warm Editorial Analog Clarity, but reduce the image to one abstract motif, minimal text, and strong thumbnail readability.
 
 Avoid: skulls, hospital rooms, microphones, lightning, fake EEG clutter, copied reference compositions, overexplained medical symbolism.
 
@@ -56,6 +92,31 @@ Exemplar assets:
 - `assets/ai-beyond-chatbot/slide3-illustration.png`
 - `assets/ai-beyond-chatbot/slide4-illustration.png`
 
+Visual examples:
+
+<table>
+  <tr>
+    <td><img src="../assets/ai-beyond-chatbot/slide6-panel1.png" alt="Swiss editorial clinical flat panel 1" width="220"></td>
+    <td><img src="../assets/ai-beyond-chatbot/slide6-panel2.png" alt="Swiss editorial clinical flat panel 2" width="220"></td>
+    <td><img src="../assets/ai-beyond-chatbot/slide6-panel3.png" alt="Swiss editorial clinical flat panel 3" width="220"></td>
+  </tr>
+  <tr>
+    <td>Flat clinical scene: calm, legible, uncluttered.</td>
+    <td>Process-oriented medical visual: muted outlines and simple staging.</td>
+    <td>Professional teaching tone: clinical but not cold.</td>
+  </tr>
+  <tr>
+    <td><img src="../assets/ai-beyond-chatbot/slide3-illustration.png" alt="Swiss editorial clinical flat slide 3 illustration" width="220"></td>
+    <td><img src="../assets/ai-beyond-chatbot/slide4-illustration.png" alt="Swiss editorial clinical flat slide 4 illustration" width="220"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Workshop visual: one claim, readable from slide distance.</td>
+    <td>Clinical-academic illustration: restrained palette and clear hierarchy.</td>
+    <td></td>
+  </tr>
+</table>
+
 Avoid: glossy UI, realistic office rendering, saturated orange dominance, fake paragraphs, busy props, cinematic drama.
 
 ## Semantic Typography Concept Poster
@@ -72,6 +133,14 @@ Prompt references:
 - `references/semantic-typography-geometric-poster-template.md`
 - `references/semantic-typography-geometric-poster-shenjingneike.md`
 
+Visual examples:
+
+No rendered semantic typography image is bundled yet. The current examples are prompt/spec examples only:
+
+- `references/semantic-typography-concept-poster-verbatim-prompt.md`
+- `references/semantic-typography-geometric-poster-template.md`
+- `references/semantic-typography-geometric-poster-shenjingneike.md`
+
 Avoid: misspelled or unreadable title, separated text/image layers, random fake English, multi-column information boards, decorative symbols unrelated to meaning.
 
 ### Geometric Typographic Concept Poster Option
@@ -83,4 +152,3 @@ Visual feel: crisp vector-like precision, modular grids, color fields, thin conn
 Use when the word should feel like a designed system, identity mark, concept poster, lecture cover, or exhibition graphic.
 
 Example: `神经内科` as a clinical-neural type system with nodes, diagnostic frames, signal lines, and clean medical palette.
-
