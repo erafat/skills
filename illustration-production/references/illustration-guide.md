@@ -61,9 +61,9 @@ If the job is unclear, do not pick a style yet.
 
 Keep taste separate from model choice.
 
-- Use OpenAI Image 2.0 as the default production image path across the vault.
+- Use OpenAI Image 2.0 as the default production image path across the vault for illustrations, covers, posters, typography-led concept art, visual examples, and style-lane samples.
 - Use Gemini / Nano Banana mainly for exploration, rough concepting, or when explicitly requested.
-- Use code, SVG, HTML/CSS, PowerPoint, or deterministic layout tools for labels, charts, diagrams, UI, and anything where text or geometry must be exact.
+- Do not default to deterministic HTML/SVG/PNG when the user asks for an image, poster, cover, or style example. Use deterministic code, SVG, HTML/CSS, PowerPoint, or layout tools only when the user explicitly requests deterministic/editable output, or when exact labels, charts, diagrams, UI, or final production typography are the deliverable.
 - Use manual cleanup or design tools for final typography, print layout, and small corrections.
 
 Do not ask an image model to solve layout, text, medical accuracy, character consistency, and composition in one pass.
@@ -335,6 +335,8 @@ Source reference:
 - Verbatim prompt stored at `references/semantic-typography-concept-poster-verbatim-prompt.md`.
 - Geometric typography option stored at `references/semantic-typography-geometric-poster-template.md`.
 - Example for `神经内科` stored at `references/semantic-typography-geometric-poster-shenjingneike.md`.
+- Prompt example for `Epilepsy` stored at `references/semantic-typography-epilepsy-poster-example.md`.
+- Prompt example for `Neurology` stored at `references/semantic-typography-neurology-poster-example.md`.
 
 Style DNA:
 

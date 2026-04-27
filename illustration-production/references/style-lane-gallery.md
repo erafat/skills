@@ -135,11 +135,15 @@ Prompt references:
 
 Visual examples:
 
-No rendered semantic typography image is bundled yet. The current examples are prompt/spec examples only:
+Generate visual examples with OpenAI Image 2.0 by default. Do not substitute deterministic SVG/HTML unless the user explicitly requests an editable or deterministic pathway.
+
+Prompt/spec examples:
 
 - `references/semantic-typography-concept-poster-verbatim-prompt.md`
 - `references/semantic-typography-geometric-poster-template.md`
 - `references/semantic-typography-geometric-poster-shenjingneike.md`
+- `references/semantic-typography-epilepsy-poster-example.md`
+- `references/semantic-typography-neurology-poster-example.md`
 
 Avoid: misspelled or unreadable title, separated text/image layers, random fake English, multi-column information boards, decorative symbols unrelated to meaning.
 
