@@ -1,0 +1,5 @@
+interface:
+  display_name: "Manuscript Production"
+  short_description: "Produce manuscripts from idea to submission"
+  default_prompt: "Use $manuscript-production to turn this manuscript project into a staged production workflow."
+
