@@ -1,6 +1,6 @@
 ---
 name: manuscript-production
-description: Use this skill when helping produce a scholarly, clinical, or research manuscript from idea through submission. Trigger for manuscript planning, source packet creation, evidence matrices, outlines, drafting, claim calibration, reference audits, reviewer responses, coauthor packets, submission readiness checks, or when the user says they want to produce or supercharge manuscripts.
+description: Use this skill when helping produce a scholarly, clinical, or research manuscript from idea through submission. Trigger for manuscript planning, source packet creation, article digestion, atomic claim extraction, evidence matrices, outlines, drafting, claim calibration, reference audits, reviewer responses, coauthor packets, submission readiness checks, or when the user says they want to produce or supercharge manuscripts.
 ---
 
 # Manuscript Production
@@ -50,7 +50,29 @@ For a new manuscript, create or maintain these files in the project folder unles
 - `06_reference_audit.md`: citation/reference issues and exact fixes.
 - `07_final_readiness.md`: coauthor-ready and submission-final dashboard.
 
-Templates are in `assets/`. Copy and adapt them when starting a project.
+Templates are in `assets/`. Copy and adapt them when starting a project. Use `article_digest.md` when the task is to digest papers before a manuscript-specific packet exists.
+
+## Article Digestion And Wiki Use
+
+When the user provides a Zotero collection, PDF folder, article folder, or asks to digest papers, treat this as a source-stage intake task. The output should be reusable article knowledge, not only a one-off manuscript packet.
+
+For each important article:
+
+1. Extract or read the best available full text. If only the abstract is available, mark that clearly.
+2. Create or update one reusable article digest using `assets/article_digest.md`.
+3. Include atomic claims: one claim, one source, one support level, and one caution.
+4. Store or point the digest to the user's knowledge-base/wiki location when available.
+5. Use the digest later as the first evidence source for manuscript source packets, evidence matrices, claim ledgers, drafting, and reference sanity checks.
+
+Atomic claims are evidence units, not final prose. Keep them short, source-tethered, and conservative. Prefer "what this paper supports" over polished paragraph language.
+
+When working inside the user's BaseCamp vault, prefer the existing epilepsy knowledge-base pattern:
+
+- `Resources/Epilepsy Knowledge Base/raw/` for source material close to original form.
+- `Resources/Epilepsy Knowledge Base/wiki/paper-notes/` for reusable article digests.
+- manuscript project files for manuscript-specific selection, synthesis, and wording.
+
+Do not copy every digested detail into the manuscript packet. Link to the wiki digest, then extract only the claims needed for the manuscript spine.
 
 ## Evidence Discovery Tools
 
@@ -115,6 +137,7 @@ Use these as intake helpers, then apply judgment. Script output is not a substit
 ## Common Failure Modes
 
 - Searching for references only after drafting: fix by building `01_source_packet.md`, `02_evidence_matrix.csv`, and `03_claim_ledger.md` before prose.
+- Digesting articles only inside a one-off manuscript folder: fix by creating reusable article digests and atomic claims in the user's knowledge base, then linking them into the manuscript packet.
 - Clean-looking bibliography but persistent citation issues: fix by re-extracting the current DOCX and checking hidden/stale citation residue.
 - Generic audit that does not answer the real risk question: fix by explicitly saying coauthor-ready, submission-final, or not ready.
 - Clinical-actionability framing becomes causal overclaiming: fix by tying claims to the evidence level and naming what remains unproven.

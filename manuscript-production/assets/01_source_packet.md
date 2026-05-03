@@ -14,9 +14,15 @@
 
 ## Must-Read Sources
 
-| Source | Role in manuscript | Evidence type | Full text available? | Key usable point | Caution |
+| Source | Wiki/article digest | Role in manuscript | Evidence type | Full text available? | Key usable point | Caution |
+|---|---|---|---|---|---|---|
+|  |  | Background |  |  |  |  |
+
+## Atomic Claims To Reuse
+
+| Claim | Source/digest | Support level | Intended manuscript location | Allowed wording | Caution |
 |---|---|---|---|---|---|
-|  | Background |  |  |  |  |
+|  |  | Established / Associated / Plausible / Hypothesis-generating / Overclaimed |  |  |  |
 
 ## Sources To Exclude Or Use Lightly
 
@@ -28,5 +34,4 @@
 
 
 ## Search Still Needed
-
 
