@@ -16,6 +16,11 @@ This repository contains multiple self-contained skills. Each skill has its own 
 - Purpose: Converts Markdown into Xiaohongshu image cards while preserving structure and embedded local images.
 - Entry: [`md-to-xhs-cards/SKILL.md`](./md-to-xhs-cards/SKILL.md)
 
+### `cv-update-review`
+- Location: [`cv-update-review/`](./cv-update-review)
+- Purpose: Runs a confirmation-gated CV update review for Word CVs, including source scans, candidate packets, protected dated copies, and explicit user approval before edits.
+- Entry: [`cv-update-review/SKILL.md`](./cv-update-review/SKILL.md)
+
 ### `manuscript-production`
 - Location: [`manuscript-production/`](./manuscript-production)
 - Purpose: Runs scholarly and clinical manuscripts as a staged production workflow from brief and source packet through drafting, verification, revision, and submission readiness.
@@ -26,6 +31,7 @@ This repository contains multiple self-contained skills. Each skill has its own 
 ```text
 repo-root/
 ├── cite-them-all/
+├── cv-update-review/
 ├── manuscript-production/
 ├── md-to-xhs-cards/
 └── .github/

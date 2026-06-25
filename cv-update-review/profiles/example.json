@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "profile_name": "example-public-profile",
+  "owner_display_name": "Jane Q. Clinician, MD",
+  "cv_document": "/absolute/path/to/current-cv.docx",
+  "output_dir": "/absolute/path/to/cv-output",
+  "pubmed": {
+    "author_queries": [
+      "Clinician JQ[Author]"
+    ],
+    "email": "",
+    "ncbi_api_key_env": "NCBI_API_KEY"
+  },
+  "rss_feeds": [
+    {
+      "name": "Personal academic website",
+      "url": "https://example.org/feed.xml"
+    }
+  ],
+  "website_urls": [
+    "https://example.org/publications"
+  ],
+  "manual_scholar_sources": [
+    "https://scholar.google.com/citations?user=EXAMPLE"
+  ],
+  "local_activity_paths": [],
+  "local_search_roots": [],
+  "eligibility": {
+    "mode": "completed_public_accepted_only",
+    "recurring_media_policy": "major_milestones_only",
+    "require_user_confirmation_before_docx_edit": true
+  },
+  "review_schedule": {
+    "cadence": "monthly",
+    "custom_cadence": "",
+    "offer_automation": false,
+    "automation_mode": "packet_only_until_user_approval"
+  },
+  "cv_sections": [
+    "Published and Accepted Research Articles",
+    "Published Abstracts",
+    "Formal Teaching",
+    "Invited Presentations",
+    "Service"
+  ]
+}

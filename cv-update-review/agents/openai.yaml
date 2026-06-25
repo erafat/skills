@@ -1,0 +1,4 @@
+interface:
+  display_name: "CV Update Review"
+  short_description: "Review monthly CV updates before Word edits"
+  default_prompt: "Use $cv-update-review to scan this month's completed professional activities and prepare a confirmation-gated CV update packet."
